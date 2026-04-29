@@ -1,48 +1,30 @@
 import requests
-import xml.etree.ElementTree as ET
 import json
-import re
 
 def obtener_noticias():
-    # Fuente estable: BBC Mundo Deportes
-    rss_url = "https://bbci.co.uk"
+    # Usamos un convertidor que ya tiene permisos globales
+    rss_original = "https://bbci.co.uk"
+    api_url = f"https://rss2json.com{rss_original}"
+    
     noticias = []
     
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-    }
-    
     try:
-        response = requests.get(rss_url, headers=headers, timeout=20)
-        response.raise_for_status()
+        response = requests.get(api_url, timeout=20)
+        data = response.json()
         
-        # Usamos una forma más flexible de leer el XML
-        content = response.content
-        root = ET.fromstring(content)
-        
-        # Buscamos los elementos 'item'
-        items = root.findall(".//item")
-        
-        for item in items[:10]:
-            titulo = item.find("title").text if item.find("title") is not None else "Sin título"
-            link = item.find("link").text if item.find("link") is not None else "#"
-            desc = item.find("description").text if item.find("description") is not None else ""
-            
-            # Limpiamos el texto
-            resumen = re.sub('<[^<]+?>', '', desc)[:120] + "..."
-            
-            noticias.append({
-                "titulo": titulo,
-                "resumen": resumen,
-                "link": link
-            })
-
-        if not noticias:
-            raise ValueError("Archivo vacío o sin noticias")
+        if data['status'] == 'ok':
+            for item in data['items'][:10]:
+                noticias.append({
+                    "titulo": item['title'],
+                    "resumen": item['description'][:120] + "...",
+                    "link": item['link']
+                })
+        else:
+            raise Exception("API respondió con error")
 
     except Exception as e:
         print(f"Error: {e}")
-        noticias = [{"titulo": "Actualizando titulares...", "resumen": "Refrescando conexión con el servidor deportivo.", "link": "#"}]
+        noticias = [{"titulo": "Actualizando portal deportivo...", "resumen": "Sincronizando con los servidores de noticias...", "link": "#"}]
     
     with open("noticias.json", "w", encoding="utf-8") as f:
         json.dump(noticias, f, ensure_ascii=False, indent=2)
