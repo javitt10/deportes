@@ -1,12 +1,12 @@
 [
   {
-    "titulo": "LIGA MX: Actualización de última hora",
-    "resumen": "Revisa los resultados aquí.",
-    "link": "https://marca.com"
+    "titulo": "LIGA MX: Actualización en proceso",
+    "resumen": "Sincronizando con los servidores de México...",
+    "link": "#"
   },
   {
-    "titulo": "F1: Novedades del GP y Checo Pérez",
+    "titulo": "F1: Novedades de Checo Pérez",
     "resumen": "Toda la información del piloto mexicano.",
-    "link": "https://marca.com"
+    "link": "#"
   }
 ]
