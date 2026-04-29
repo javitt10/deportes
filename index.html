@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport Ticker Live</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #1a1a1a; }
+        
+        /* Estilo del contenedor del cintillo */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background-color: #e2001a; /* Rojo deportivo */
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 60s linear infinite; /* Velocidad del movimiento */
+        }
+
+        .ticker-item {
+            display: inline-block;
+            padding: 0 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .ticker-item a { color: white; text-decoration: none; }
+        .ticker-item span { color: #ffcc00; margin-right: 10px; } /* Color para separar */
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .content { margin-top: 80px; padding: 20px; color: white; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="ticker-wrap">
+        <div class="ticker-move" id="ticker-content">
+            <!-- Las noticias aparecerán aquí -->
+            Cargando noticias de última hora...
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Portal de Noticias Automatizado</h1>
+        <p>Los datos se actualizan automáticamente cada hora desde Marca MX.</p>
+    </div>
+
+    <script>
+        const apiUrl = "https://javitt10.github.io/deportes/noticias.json" + new Date().getTime();
+
+        async function cargarTicker() {
+            try {
+                const respuesta = await fetch(apiUrl);
+                const noticias = await respuesta.json();
+                const ticker = document.getElementById('ticker-content');
+                
+                ticker.innerHTML = ''; // Limpiar
+
+                // Repetimos las noticias un par de veces para que el loop no se vea vacío
+                const listaNoticias = [...noticias, ...noticias]; 
+
+                listaNoticias.forEach(item => {
+                    const noticiaHtml = `
+                        <div class="ticker-item">
+                            <span>●</span> 
+                            <a href="${item.link}" target="_blank">${item.titulo}</a>
+                        </div>
+                    `;
+                    ticker.innerHTML += noticiaHtml;
+                });
+            } catch (e) {
+                console.error("Error al cargar ticker:", e);
+            }
+        }
+
+        cargarTicker();
+    </script>
+</body>
+</html>
