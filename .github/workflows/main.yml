@@ -2,8 +2,8 @@ name: Actualizar Noticias Deportivas
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *' # Se ejecuta cada hora
+  workflow_dispatch:      # Permite ejecutarlo manualmente para probar
 
 permissions:
   contents: write
@@ -24,13 +24,11 @@ jobs:
         run: pip install requests
 
       - name: Ejecutar script de actualización
+        env:
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }} # Conexión con tu Secret
         run: python actualizar_noticias.py
-
-      - name: Verificar si el archivo existe
-        run: ls -l noticias.json  # Esto nos dirá si el archivo se generó físicamente
 
       - name: Guardar cambios
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Actualización automática de noticias"
-          branch: main
+          commit_message: "Actualización automática de noticias con NewsAPI"
