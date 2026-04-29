@@ -5,7 +5,7 @@ import re
 
 def obtener_noticias():
     # URL del RSS de Marca México
-        rss_url = "https://uecdn.es"
+    rss_url = "https://uecdn.es"
     try:
         response = requests.get(rss_url, timeout=15)
         response.raise_for_status()
