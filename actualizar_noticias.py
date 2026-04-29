@@ -1,24 +1,37 @@
+import requests
+import xml.etree.ElementTree as ET
 import json
+import re
 
 def obtener_noticias():
-    # DATOS DE PRUEBA LOCALES (Sin usar internet)
-    noticias = [
-        {
-            "titulo": "¡PRUEBA EXITOSA!",
-            "resumen": "Si lees esto, el robot de GitHub funciona y puede escribir archivos.",
-            "link": "https://google.com"
-        },
-        {
-            "titulo": "Siguiente paso: Conexión",
-            "resumen": "Ya logramos que el archivo se genere solo. Ahora falta el internet.",
-            "link": "#"
-        }
-    ]
+    # Google News - Deportes México (Es una fuente que NO bloquea)
+    rss_url = "https://google.com"
+    noticias = []
     
-    # Guardamos el archivo noticias.json
+    try:
+        response = requests.get(rss_url, timeout=20)
+        response.raise_for_status()
+        root = ET.fromstring(response.content)
+        
+        # Google News usa una estructura estándar
+        for item in root.findall(".//item")[:10]:
+            titulo = item.find("title").text
+            link = item.find("link").text
+            # Google News no siempre manda descripción, así que ponemos un texto base
+            resumen = "Haz clic para leer la nota completa en la fuente original."
+            
+            noticias.append({
+                "titulo": titulo,
+                "resumen": resumen,
+                "link": link
+            })
+            
+    except Exception as e:
+        print(f"Error: {e}")
+        noticias = [{"titulo": "Actualizando...", "resumen": "Cargando noticias deportivas...", "link": "#"}]
+    
     with open("noticias.json", "w", encoding="utf-8") as f:
         json.dump(noticias, f, ensure_ascii=False, indent=2)
-    print("Archivo generado con datos de prueba.")
 
 if __name__ == "__main__":
     obtener_noticias()
