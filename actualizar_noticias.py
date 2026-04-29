@@ -1,35 +1,37 @@
+import os 
 import requests
 import json
 
 def obtener_noticias():
-    # Usamos un servicio intermedio que extrae las noticias por nosotros para evitar bloqueos
-    # Esta URL apunta a las últimas noticias de deportes globales
-    rss_proxy_url = "https://www.espn.com/espn/rss/news"
+    # El código toma la llave de la "caja fuerte" de GitHub
+    api_key = os.getenv("NEWS_API_KEY") 
+    
+    url = f"https://newsapi.org{api_key}"
+    
     
     noticias = []
     try:
-        response = requests.get(rss_proxy_url, timeout=20)
+        response = requests.get(api_url, timeout=20)
         data = response.json()
         
-        if data['status'] == 'ok':
-            for item in data['items'][:10]:
+        if data.get('status') == 'ok':
+            for article in data.get('articles', [])[:10]:
                 noticias.append({
-                    "titulo": item['title'],
-                    "resumen": "Lee la nota completa en el portal oficial.",
-                    "link": item['link']
+                    "titulo": article['title'],
+                    "resumen": article['description'] if article['description'] else "Click para leer más...",
+                    "link": article['url']
                 })
         else:
-            raise Exception("Proxy ocupado")
+            print("Error de la API:", data.get('message'))
             
-    except Exception:
-        # Si todo falla, mantenemos estas para que el cintillo siempre se mueva
-        noticias = [
-            {"titulo": "LIGA MX: Actualización de última hora", "resumen": "Revisa los resultados aquí.", "link": "https://marca.com"},
-            {"titulo": "F1: Novedades del GP y Checo Pérez", "resumen": "Toda la información del piloto mexicano.", "link": "https://marca.com"}
-        ]
+    except Exception as e:
+        print(f"Error de conexión: {e}")
+        # Noticias de respaldo si la API falla
+        noticias = [{"titulo": "Sincronizando noticias locales...", "resumen": "Refrescando titulares deportivos de México.", "link": "#"}]
     
+    # Guardamos en tu noticias.json
     with open("noticias.json", "w", encoding="utf-8") as f:
         json.dump(noticias, f, ensure_ascii=False, indent=2)
 
 if __name__ == "__main__":
-    obtener_noticias()
+    obtener_noticias_mexico()
