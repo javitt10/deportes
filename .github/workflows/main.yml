@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # Esto le da permiso explícito para escribir archivos
+  contents: write
 
 jobs:
   build:
@@ -26,8 +26,11 @@ jobs:
       - name: Ejecutar script de actualización
         run: python actualizar_noticias.py
 
+      - name: Verificar si el archivo existe
+        run: ls -l noticias.json  # Esto nos dirá si el archivo se generó físicamente
+
       - name: Guardar cambios
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Actualización automática de noticias"
-          file_pattern: 'noticias.json' # Forzamos a que busque este archivo
+          branch: main
