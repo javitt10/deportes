@@ -1,12 +1,7 @@
 [
   {
-    "titulo": "¡PRUEBA EXITOSA!",
-    "resumen": "Si lees esto, el robot de GitHub funciona y puede escribir archivos.",
-    "link": "https://google.com"
-  },
-  {
-    "titulo": "Siguiente paso: Conexión",
-    "resumen": "Ya logramos que el archivo se genere solo. Ahora falta el internet.",
+    "titulo": "Actualizando...",
+    "resumen": "Cargando noticias deportivas...",
     "link": "#"
   }
 ]
