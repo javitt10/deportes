@@ -4,7 +4,7 @@ import json
 import re
 
 def obtener_noticias():
-    rss_url = "https://uecdn.es"
+    rss_url = "https://espn.com.mx"
     noticias = []
     
     try:
