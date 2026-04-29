@@ -1,17 +1,12 @@
 [
   {
-    "titulo": "LIGA MX: Preparativos para la jornada",
-    "resumen": "Los equipos afinan detalles...",
+    "titulo": "LIGA MX: Actualización de última hora",
+    "resumen": "Revisa los resultados aquí.",
     "link": "https://marca.com"
   },
   {
-    "titulo": "F1: Checo Pérez listo para el GP",
-    "resumen": "El piloto mexicano busca el podio...",
-    "link": "https://marca.com"
-  },
-  {
-    "titulo": "EUROPA: Resultados de la Champions",
-    "resumen": "Grandes duelos en la jornada de hoy...",
+    "titulo": "F1: Novedades del GP y Checo Pérez",
+    "resumen": "Toda la información del piloto mexicano.",
     "link": "https://marca.com"
   }
 ]
