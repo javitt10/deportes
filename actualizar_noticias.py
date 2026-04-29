@@ -4,7 +4,7 @@ import json
 def obtener_noticias():
     # Usamos un servicio intermedio que extrae las noticias por nosotros para evitar bloqueos
     # Esta URL apunta a las últimas noticias de deportes globales
-    rss_proxy_url = "https://rss2json.com"
+    rss_proxy_url = "https://www.espn.com/espn/rss/news"
     
     noticias = []
     try:
