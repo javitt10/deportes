@@ -2,18 +2,18 @@ name: Actualizar Noticias Deportivas
 
 on:
   schedule:
-    - cron: '0 * * * *' # Se ejecuta cada hora
-  workflow_dispatch:      # Permite ejecutarlo manualmente para probar
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar repositorio
-        uses: [actions/checkout](https://github.com)@v4
+        uses: actions/checkout@v4
 
       - name: Configurar Python
-        uses: [actions/setup-python](https://github.com)@v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -23,7 +23,7 @@ jobs:
       - name: Ejecutar script de actualización
         run: python actualizar_noticias.py
 
-      - name: Guardar cambios en GitHub
-        uses: [stefanzweifel/git-auto-commit-action](https://github.com)@v5
+      - name: Guardar cambios
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Actualización automática de noticias"
