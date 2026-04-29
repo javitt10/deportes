@@ -1,7 +1,17 @@
 [
   {
-    "titulo": "Actualizando...",
-    "resumen": "Cargando noticias deportivas...",
-    "link": "#"
+    "titulo": "LIGA MX: Preparativos para la jornada",
+    "resumen": "Los equipos afinan detalles...",
+    "link": "https://marca.com"
+  },
+  {
+    "titulo": "F1: Checo Pérez listo para el GP",
+    "resumen": "El piloto mexicano busca el podio...",
+    "link": "https://marca.com"
+  },
+  {
+    "titulo": "EUROPA: Resultados de la Champions",
+    "resumen": "Grandes duelos en la jornada de hoy...",
+    "link": "https://marca.com"
   }
 ]
