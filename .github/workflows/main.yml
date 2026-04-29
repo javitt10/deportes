@@ -5,6 +5,9 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write  # Esto le da permiso explícito para escribir archivos
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,3 +30,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Actualización automática de noticias"
+          file_pattern: 'noticias.json' # Forzamos a que busque este archivo
